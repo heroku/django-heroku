@@ -27,4 +27,23 @@ This will automatically configure ``DATABASE_URL``, ``ALLOWED_HOSTS``, WhiteNois
 
 **Bonus points!** If you set the ``SECRET_KEY`` environment variable, it will automatically be used in your Django settings, too!
 
+Disabling Functionality
+///////////////////////
+
+The following keyword arguments can be passed ``False`` as a value, which will disable automatic configuration for their specific areas of responsibility:
+
+- ``databases``
+- ``test_runner``
+- ``staticfiles``
+- ``allowed_hosts``
+- ``logging``
+- ``secret_key``
+
+-----------------------
+
+You can also just use this library to provide a test runner for your Django application, for use on Heroku CI::
+
+    import django_heroku
+    TEST_RUNNER = 'django_heroku.HerokuDiscoverRunner'
+
 ✨🍰✨
