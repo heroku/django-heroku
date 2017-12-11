@@ -50,10 +50,20 @@ def settings(config, databases=True, staticfiles=True, allowed_hosts=True, loggi
         logger.info('Applying Heroku Staticfiles configuration to Django settings.')
 
         config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
+        print(config['STATIC_ROOT'])
         config['STATIC_URL'] = '/static/'
 
         # Ensure STATIC_ROOT exists.
         mkdir_p(config['STATIC_ROOT'])
+
+        # Insert Whitenoise Middleware.
+        try:
+            config['MIDDLEWARE_CLASSES'] = tuple(['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE_CLASSES']))
+        except KeyError:
+            config['MIDDLEWARE'] = tuple(['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE']))
+
+        # Enable GZip.
+        config['STATICFILES_STORAGE'] = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     if allowed_hosts:
         logger.info('Applying Heroku ALLOWED_HOSTS configuration to Django settings.')
