@@ -1,34 +1,32 @@
 django-heroku
 =============
 
-This is a (work in progress) Django library for Heroku apps.
+This is a Django library for Heroku applications that ensures a seamless deployment and development experience.
 
-It could serve many purposes, including (but not limited to):
+This library provides:
 
--  Settings configuration (static files / whitenoise)
--  Logging configuration (currently not covered at all)
--  Test runner (important for CI)
-
-It will depend on the following libraries:
-
-- dj-database-url (or django-environ)
-- psycopg2
-- WhiteNoise
-- Django itself.
+-  Settings configuration (Static files / WhiteNoise).
+-  Logging configuration.
+-  Test runner (important for `Heroku CI <https://www.heroku.com/continuous-integration>`_).
 
 --------------
 
-Django 2.0 will be targetted.
+Django 2.0 is targetted, but older versions of Django should be compatible.
 
-The name of the library is pretty set, but still to–be–determined.
+Usage of Django-Heroku
+----------------------
 
-Possible Usage
---------------
+In ``settings.py``, at the very bottom
 
-In ``settings.py``:
-
-::
+.. codeblock: python
 
     …
     # Configure Django App for Heroku.
+    import django_heroku
     django_heroku.configure(locals())
+
+This will automatically configure ``DATABASE_URL``, ``ALLOWED_HOSTS``, WhiteNoise (for static assets), Logging, and Heroku CI for your application.
+
+**Bonus points!** If you set the ``SECRET_KEY`` environment variable, it will automatically be used in your Django settings, too!
+
+✨🍰✨
