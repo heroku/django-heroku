@@ -42,7 +42,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
         super(HerokuDiscoverRunner, self).teardown_databases(old_config, **kwargs)
 
 
-def settings(config, databases=True, multi_db=False, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+def configure(config, databases=True, multi_db=False, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
@@ -144,4 +144,3 @@ def settings(config, databases=True, multi_db=False, test_runner=True, staticfil
     if secret_key:
         if 'SECRET_KEY' in os.environ:
             logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
-
