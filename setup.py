@@ -20,7 +20,7 @@ AUTHOR = 'Kenneth Reitz'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'dj-database-url', 'whitenoise', 'django>=2.0'
+    'dj-database-url', 'whitenoise', 'django'
 ]
 
 # The rest you shouldn't have to touch too much :)
