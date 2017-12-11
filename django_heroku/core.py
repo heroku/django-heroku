@@ -3,6 +3,7 @@ import os
 
 import dj_database_url
 
+MAX_CONN_AGE = 600
 
 logger = logging.getLogger(__name__)
 
@@ -34,15 +35,25 @@ def settings(config, databases=True, staticfiles=True, allowed_hosts=True, loggi
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
     if databases:
+        # Integrity check.
+        if 'DATABASES' not in config:
+            config['DATABASES'] = {'default': None}
+
+        # Support all Heroku databases.
+        for (env, url) in os.environ.items():
+            if env.startswith('HEROKU_POSTGRESQL'):
+                db_color = env[len('HEROKU_POSTGRESQL_'):].split('_')[0]
+
+                logger.info('Adding ${} to DATABASES Django setting ({}).'.format(env, db_color))
+
+                config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE)
+
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to DATABASES Django setting.')
 
-            # Integrity check.
-            if 'DATABASES' not in config:
-                config['DATABASES'] = {'default': None}
-
             # Configure Django for DATABASE_URL environment variable.
-            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=600)
+            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=MAX_CONN_AGE)
+
         else:
             logger.info('$DATABASE_URL not found, falling back to previous settings!')
 
@@ -51,7 +62,6 @@ def settings(config, databases=True, staticfiles=True, allowed_hosts=True, loggi
         logger.info('Applying Heroku Staticfiles configuration to Django settings.')
 
         config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
-        print(config['STATIC_ROOT'])
         config['STATIC_URL'] = '/static/'
 
         # Ensure STATIC_ROOT exists.
