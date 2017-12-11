@@ -1,5 +1,5 @@
-django-heroku
-=============
+Django-Heroku (Python Library)
+==============================
 
 This is a Django library for Heroku applications that ensures a seamless deployment and development experience.
 
