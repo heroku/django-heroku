@@ -9,24 +9,6 @@ MAX_CONN_AGE = 600
 logger = logging.getLogger(__name__)
 
 
-def mkdir_p(newdir):
-    """works the way a good mkdir should :)
-        - already exists, silently complete
-        - regular file in the way, raise an exception
-        - parent directory(ies) does not exist, make them as well
-    """
-    try:
-        os.makedirs(newdir)
-    except OSError as e:
-        if e.errno == errno.EEXIST and os.path.isdir(newdir):
-            pass
-        else:
-            raise OSError (
-                "a file with the same name as the desired "
-                "dir, '%s', already exists." % newdir
-            )
-
-
 class HerokuDiscoverRunner(DiscoverRunner):
     """Test Runner for Heroku CI, which provides a database for you.
     This requires you to set the TEST database (done for you by settings().)"""
@@ -107,7 +89,7 @@ def settings(config, databases=True, multi_db=False, test_runner=True, staticfil
         config['STATIC_URL'] = '/static/'
 
         # Ensure STATIC_ROOT exists.
-        mkdir_p(config['STATIC_ROOT'])
+        os.makedirs(config['STATIC_ROOT'], exist_ok=True)
 
         # Insert Whitenoise Middleware.
         try:
