@@ -17,6 +17,7 @@ It will depend on the following libraries:
 - WhiteNoise
 - Gunicorn, potentially
 
+----------------------------
 
 Django 2.0 will be targetted.
 
