@@ -59,6 +59,42 @@ def settings(config, databases=True, staticfiles=True, allowed_hosts=True, loggi
         logger.info('Applying Heroku ALLOWED_HOSTS configuration to Django settings.')
         config['ALLOWED_HOSTS'] = ['*']
 
+    if logging:
+        logger.info('Applying Heroku logging configuration to Django settings.')
+
+        config['LOGGING'] = {
+            'version': 1,
+            'disable_existing_loggers': False,
+            'formatters': {
+                'verbose': {
+                    'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
+                               'pathname=%(pathname)s lineno=%(lineno)s ' +
+                               'funcname=%(funcName)s %(message)s'),
+                    'datefmt': '%Y-%m-%d %H:%M:%S'
+                },
+                'simple': {
+                    'format': '%(levelname)s %(message)s'
+                }
+            },
+            'handlers': {
+                'null': {
+                    'level': 'DEBUG',
+                    'class': 'logging.NullHandler',
+                },
+                'console': {
+                    'level': 'DEBUG',
+                    'class': 'logging.StreamHandler',
+                    'formatter': 'verbose'
+                }
+            },
+            'loggers': {
+                'testlogger': {
+                    'handlers': ['console'],
+                    'level': 'INFO',
+                }
+            }
+        }
+
     # SECRET_KEY configuration.
     if secret_key:
         if 'SECRET_KEY' in os.environ:
