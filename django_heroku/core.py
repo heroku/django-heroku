@@ -32,6 +32,7 @@ def mkdir_p(newdir):
 def settings(config, databases=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
     # Database configuration.
+    # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
     if databases:
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to DATABASES Django setting.')
