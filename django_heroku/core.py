@@ -43,7 +43,7 @@ def settings(config, databases=True, staticfiles=True, allowed_hosts=True, loggi
             # Configure Django for DATABASE_URL environment variable.
             config['DATABASES']['default'] = dj_database_url.config(conn_max_age=600)
         else:
-            logger.info('$DATABASE_URL not found, falling back to previosu settings!')
+            logger.info('$DATABASE_URL not found, falling back to previous settings!')
 
     # Staticfiles configuration.
     if staticfiles:
