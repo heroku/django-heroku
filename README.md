@@ -22,3 +22,13 @@ Django 2.0 will be targetted.
 
 
 The name of the library is pretty set, but still to–be–determined.
+
+
+Possible Usage
+--------------
+
+In `settings.py`:
+
+    …
+    # Configure Django App for Heroku.
+    django_heroku.configure(locals())
