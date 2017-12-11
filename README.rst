@@ -16,9 +16,7 @@ Django 2.0 is targeted, but older versions of Django should be compatible.
 Usage of Django-Heroku
 ----------------------
 
-In ``settings.py``, at the very bottom
-
-.. codeblock: python
+In ``settings.py``, at the very bottom::
 
     …
     # Configure Django App for Heroku.
