@@ -24,7 +24,7 @@ In ``settings.py``, at the very bottom::
     …
     # Configure Django App for Heroku.
     import django_heroku
-    django_heroku.configure(locals())
+    django_heroku.settings(locals())
 
 This will automatically configure ``DATABASE_URL``, ``ALLOWED_HOSTS``, WhiteNoise (for static assets), Logging, and Heroku CI for your application.
 
