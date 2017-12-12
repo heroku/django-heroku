@@ -13,7 +13,12 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import os
 
 import sys
+
+# Hack for running app directly.
 sys.path.insert(0, os.path.abspath('..'))
+# Hack for tests. 
+sys.path.insert(0, os.path.abspath('.'))
+
 import django_heroku
 
 
