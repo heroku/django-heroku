@@ -1,0 +1,6 @@
+python:
+- "3.6"
+install:
+  - "pip install pipenv --upgrade"
+  - "pipenv install --dev"
+script: make
