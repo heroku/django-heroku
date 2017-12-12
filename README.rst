@@ -14,7 +14,7 @@ This library provides:
 
 --------------
 
-Django 2.0 is targeted, but older versions of Django should be compatible.
+Django 2.0 is targeted, but older versions of Django should be compatible. Only Python 3 is supported.
 
 Usage of Django-Heroku
 ----------------------
