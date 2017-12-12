@@ -144,4 +144,6 @@ def settings(config, databases=True, multi_db=False, test_runner=True, staticfil
     if secret_key:
         if 'SECRET_KEY' in os.environ:
             logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
+            # Set the Django setting from the environment variable. 
+            config['SECRET_KEY'] = os.environ['SECRET_KEY']
 
