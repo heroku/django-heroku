@@ -42,7 +42,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
         super(HerokuDiscoverRunner, self).teardown_databases(old_config, **kwargs)
 
 
-def settings(config, databases=True, db_colors=False, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+def settings(config, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
