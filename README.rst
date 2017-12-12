@@ -33,7 +33,7 @@ This will automatically configure ``DATABASE_URL``, ``ALLOWED_HOSTS``, WhiteNois
 Disabling Functionality
 ///////////////////////
 
-``configure()`` also accepts keyword arguments that can be passed ``False`` as a value, which will disable automatic configuration for their specific areas of responsibility:
+``settings()`` also accepts keyword arguments that can be passed ``False`` as a value, which will disable automatic configuration for their specific areas of responsibility:
 
 - ``databases``
 - ``test_runner``
