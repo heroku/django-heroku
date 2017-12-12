@@ -42,7 +42,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
         super(HerokuDiscoverRunner, self).teardown_databases(old_config, **kwargs)
 
 
-def settings(config, databases=True, multi_db=False, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+def settings(config, databases=True, db_colors=False, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
@@ -51,8 +51,9 @@ def settings(config, databases=True, multi_db=False, test_runner=True, staticfil
         if 'DATABASES' not in config:
             config['DATABASES'] = {'default': None}
 
-        if multi_db:
+        if db_colors:
             # Support all Heroku databases.
+            # TODO: This appears to break TestRunner.
             for (env, url) in os.environ.items():
                 if env.startswith('HEROKU_POSTGRESQL'):
                     db_color = env[len('HEROKU_POSTGRESQL_'):].split('_')[0]
