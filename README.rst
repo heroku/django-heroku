@@ -1,6 +1,9 @@
 Django-Heroku (Python Library)
 ==============================
 
+.. image:: https://travis-ci.org/heroku/django-heroku.svg?branch=master
+    :target: https://travis-ci.org/heroku/django-heroku
+
 This is a Django library for Heroku applications that ensures a seamless deployment and development experience.
 
 This library provides:
