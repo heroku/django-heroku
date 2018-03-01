@@ -60,7 +60,7 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
 
                     logger.info('Adding ${} to DATABASES Django setting ({}).'.format(env, db_color))
 
-                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE)
+                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE, require_ssl=True)
 
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to default DATABASE Django setting.')
@@ -145,6 +145,6 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
     if secret_key:
         if 'SECRET_KEY' in os.environ:
             logger.info('Adding $SECRET_KEY to SECRET_KEY Django setting.')
-            # Set the Django setting from the environment variable. 
+            # Set the Django setting from the environment variable.
             config['SECRET_KEY'] = os.environ['SECRET_KEY']
 

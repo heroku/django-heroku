@@ -13,7 +13,7 @@ from setuptools import find_packages, setup, Command
 
 # Package meta-data.
 NAME = 'django-heroku'
-DESCRIPTION = 'This is a (work in progress) Django library for Heroku apps.'
+DESCRIPTION = 'This is a Django library for Heroku apps.'
 URL = 'https://github.com/heroku/django-heroku'
 EMAIL = 'kreitz@salesforce.com'
 AUTHOR = 'Kenneth Reitz'
