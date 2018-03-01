@@ -60,13 +60,13 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
 
                     logger.info('Adding ${} to DATABASES Django setting ({}).'.format(env, db_color))
 
-                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE, require_ssl=True)
+                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to default DATABASE Django setting.')
 
             # Configure Django for DATABASE_URL environment variable.
-            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=MAX_CONN_AGE)
+            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=MAX_CONN_AGE, ssl_require=True)
 
             logger.info('Adding $DATABASE_URL to TEST default DATABASE Django setting.')
 
