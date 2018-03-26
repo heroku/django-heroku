@@ -43,6 +43,19 @@ class HerokuDiscoverRunner(DiscoverRunner):
 
 
 def settings(config, *, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+    if 'USE_MAX_CONN_AGE' in os.environ:
+        use_max_conn_age = bool(os.environ['USE_MAX_CONN_AGE'])
+    else:
+        use_max_conn_age = True
+
+    # DEVELOPMENT mode configuration.
+    ssl_required = True
+    if 'DEVELOPMENT' in os.environ:
+        logger.info('Adding $DEVELOPMENT to DEVELOPMENT Django setting.')
+        # Set the Django setting from the environment variable.
+        config['DEVELOPMENT'] = os.environ['DEVELOPMENT']
+        if os.environ['DEVELOPMENT'] == 'True':
+            ssl_required = False
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
@@ -60,13 +73,19 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
 
                     logger.info('Adding ${} to DATABASES Django setting ({}).'.format(env, db_color))
 
-                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE, ssl_require=True)
+                    if use_max_conn_age:
+                        config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=MAX_CONN_AGE, ssl_require=True)
+                    else:
+                        config['DATABASES'][db_color] = dj_database_url.parse(url, ssl_require=True)
 
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to default DATABASE Django setting.')
 
             # Configure Django for DATABASE_URL environment variable.
-            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=MAX_CONN_AGE, ssl_require=True)
+            if use_max_conn_age:
+                config['DATABASES']['default'] = dj_database_url.config(conn_max_age=MAX_CONN_AGE, ssl_require=ssl_required)
+            else:
+                config['DATABASES']['default'] = dj_database_url.config(ssl_require=ssl_required)
 
             logger.info('Adding $DATABASE_URL to TEST default DATABASE Django setting.')
 
