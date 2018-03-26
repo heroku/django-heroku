@@ -49,14 +49,13 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         use_max_conn_age = True
 
     # DEVELOPMENT mode configuration.
+    ssl_required = True
     if 'DEVELOPMENT' in os.environ:
         logger.info('Adding $DEVELOPMENT to DEVELOPMENT Django setting.')
         # Set the Django setting from the environment variable.
         config['DEVELOPMENT'] = os.environ['DEVELOPMENT']
         if os.environ['DEVELOPMENT'] == 'True':
             ssl_required = False
-        else:
-            ssl_required = True
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
