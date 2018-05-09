@@ -86,7 +86,7 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
     if staticfiles:
         logger.info('Applying Heroku Staticfiles configuration to Django settings.')
 
-        config['STATIC_ROOT'] = os.path.join(config['BASE_DIR'], 'staticfiles')
+        config['STATIC_ROOT'] = os.path.join(str(config['BASE_DIR']), 'staticfiles')
         config['STATIC_URL'] = '/static/'
 
         # Ensure STATIC_ROOT exists.
