@@ -20,7 +20,7 @@ AUTHOR = 'Kenneth Reitz'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    'dj-database-url>=0.5.0', 'whitenoise', 'psycopg2', 'django'
+    'dj-database-url>=0.5.0', 'whitenoise', 'psycopg2-binary', 'django'
 ]
 
 # The rest you shouldn't have to touch too much :)
