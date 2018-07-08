@@ -17,7 +17,9 @@ class HerokuDiscoverRunner(DiscoverRunner):
         if not os.environ.get('CI'):
             raise ValueError(
                 "The CI env variable must be set to enable this functionality.  WARNING:  "
-                "This test runner will wipe all tables in the database it targets!")
+                "This test runner will wipe all tables in the 'public' schema "
+                "of the database it targets!"
+            )
         self.keepdb = True
         return super(HerokuDiscoverRunner, self).setup_databases(**kwargs)
 
@@ -25,14 +27,16 @@ class HerokuDiscoverRunner(DiscoverRunner):
         with connection.cursor() as cursor:
             cursor.execute(
                 """
-                    DROP SCHEMA public CASCADE;
-                    CREATE SCHEMA public;
-                    GRANT ALL ON SCHEMA public TO postgres;
-                    GRANT ALL ON SCHEMA public TO public;
-                    COMMENT ON SCHEMA public IS 'standard public schema';
+                    DROP TABLE (
+                        SELECT
+                            table_name
+                        FROM
+                            information_schema.tables
+                        WHERE
+                            table_schema = 'public'
+                    ) CASCADE;
                 """
             )
-        pass
 
     def teardown_databases(self, old_config, **kwargs):
         self.keepdb = True
