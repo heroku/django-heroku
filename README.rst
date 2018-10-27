@@ -48,5 +48,3 @@ You can also just use this library to provide a test runner for your Django appl
 
     import django_heroku
     TEST_RUNNER = 'django_heroku.HerokuDiscoverRunner'
-
-✨🍰✨
