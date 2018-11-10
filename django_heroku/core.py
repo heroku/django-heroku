@@ -78,7 +78,7 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
 
             # Enable test database if found in CI environment.
             if 'CI' in os.environ:
-                config['DATABASES']['default']['TEST'] = config['DATABASES']['default']
+                config['DATABASES']['default']['TEST'] = config['DATABASES']['default'].copy()
 
         else:
             logger.info('$DATABASE_URL not found, falling back to previous settings!')
