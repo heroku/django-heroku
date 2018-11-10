@@ -25,18 +25,8 @@ class HerokuDiscoverRunner(DiscoverRunner):
 
     def _wipe_tables(self, connection):
         with connection.cursor() as cursor:
-            cursor.execute(
-                """
-                    DROP TABLE (
-                        SELECT
-                            table_name
-                        FROM
-                            information_schema.tables
-                        WHERE
-                            table_schema = 'public'
-                    ) CASCADE;
-                """
-            )
+            for table_name in connection.introspection.table_names():
+                cursor.execute(f"DROP TABLE IF EXISTS {table_name} CASCADE")
 
     def teardown_databases(self, old_config, **kwargs):
         self.keepdb = True
