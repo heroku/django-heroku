@@ -129,4 +129,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-django_heroku.settings(locals())
+using_geodjango = bool(os.environ.get('BUILD_WITH_GEO_LIBRARIES'))
+django_heroku.settings(locals(), geodjango=using_geodjango)

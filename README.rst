@@ -42,6 +42,13 @@ Disabling Functionality
 - ``logging``
 - ``secret_key``
 
+
+Geodjango support
+///////////////////////
+To enable the Geodjango support pass the ``geodjango`` flag as ``True`` when calling ``settings()``::
+
+    django_heroku.settings(locals(), geodjango=True)
+
 -----------------------
 
 You can also just use this library to provide a test runner for your Django application, for use on Heroku CI::
