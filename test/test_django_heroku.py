@@ -49,12 +49,11 @@ def test_secret_key():
 
 
 def test_database_ssl_require():
-    os.environ['DEBUG'] = ''
     imp.reload(config)
     assert config.DATABASES['default']['OPTIONS']['sslmode'] == 'require'
 
 
-def test_database_no_ssl_require_with_debug():
-    os.environ['DEBUG'] = 'Trueish'
+def test_database_no_ssl_require():
+    os.environ['DATABASE_NO_SSL_REQUIRE'] = 'Trueish'
     imp.reload(config)
     assert 'OPTIONS' not in config.DATABASES['default']

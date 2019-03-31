@@ -56,7 +56,7 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
             config['DATABASES'] = {'default': None}
 
         conn_max_age = config.get('CONN_MAX_AGE', MAX_CONN_AGE)
-        ssl_require = not config.get('DEBUG', False)
+        ssl_require = not bool(os.environ.get('DATABASE_NO_SSL_REQUIRE'))
 
         if db_colors:
             # Support all Heroku databases.
