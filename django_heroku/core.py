@@ -56,7 +56,8 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
             config['DATABASES'] = {'default': None}
 
         conn_max_age = config.get('CONN_MAX_AGE', MAX_CONN_AGE)
-            
+        ssl_require = not config.get('DEBUG', False)
+
         if db_colors:
             # Support all Heroku databases.
             # TODO: This appears to break TestRunner.
@@ -66,13 +67,13 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
 
                     logger.info('Adding ${} to DATABASES Django setting ({}).'.format(env, db_color))
 
-                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=conn_max_age, ssl_require=True)
+                    config['DATABASES'][db_color] = dj_database_url.parse(url, conn_max_age=conn_max_age, ssl_require=ssl_require)
 
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to default DATABASE Django setting.')
 
             # Configure Django for DATABASE_URL environment variable.
-            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=conn_max_age, ssl_require=True)
+            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=conn_max_age, ssl_require=ssl_require)
 
             logger.info('Adding $DATABASE_URL to TEST default DATABASE Django setting.')
 
