@@ -27,14 +27,9 @@ class HerokuDiscoverRunner(DiscoverRunner):
         with connection.cursor() as cursor:
             cursor.execute(
                 """
-                    DROP TABLE (
-                        SELECT
-                            table_name
-                        FROM
-                            information_schema.tables
-                        WHERE
-                            table_schema = 'public'
-                    ) CASCADE;
+                    SELECT format('DROP TABLE IF EXISTS %s;',
+                                  (SELECT string_agg(table_name, ',')
+                                  FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'public'));
                 """
             )
 
