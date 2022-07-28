@@ -16,6 +16,11 @@ This library provides:
 
 Django 2.0 is targeted, but older versions of Django should be compatible. Only Python 3 is supported.
 
+Installation
+------------
+
+    pip install django-heroku
+
 Usage of Django-Heroku
 ----------------------
 
