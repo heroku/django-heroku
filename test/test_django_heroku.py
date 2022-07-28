@@ -46,3 +46,14 @@ def test_secret_key():
 
     imp.reload(config)
     assert config.SECRET_KEY == 'SECRET'
+
+
+def test_database_ssl_require():
+    imp.reload(config)
+    assert config.DATABASES['default']['OPTIONS']['sslmode'] == 'require'
+
+
+def test_database_no_ssl_require():
+    os.environ['DATABASE_NO_SSL_REQUIRE'] = 'Trueish'
+    imp.reload(config)
+    assert 'OPTIONS' not in config.DATABASES['default']
