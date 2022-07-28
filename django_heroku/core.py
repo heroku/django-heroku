@@ -98,11 +98,18 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         # Ensure STATIC_ROOT exists.
         os.makedirs(config['STATIC_ROOT'], exist_ok=True)
 
-        # Insert Whitenoise Middleware.
+        # Insert Whitenoise Middleware either directly after SecurityMiddleware or the top of the list
+        _MIDDLEWARE_CLASSES = 'MIDDLEWARE_CLASSES'
+        _MIDDLEWARE = 'MIDDLEWARE'
+        middleware_key = _MIDDLEWARE_CLASSES if _MIDDLEWARE_CLASSES in config else _MIDDLEWARE
+
+        middleware = list(config[middleware_key])
         try:
-            config['MIDDLEWARE_CLASSES'] = tuple(['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE_CLASSES']))
-        except KeyError:
-            config['MIDDLEWARE'] = tuple(['whitenoise.middleware.WhiteNoiseMiddleware'] + list(config['MIDDLEWARE']))
+            index = middleware.index('django.middleware.security.SecurityMiddleware')
+        except ValueError:
+            index = -1
+        middleware.insert(index + 1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+        config[middleware_key] = tuple(middleware)
 
         # Enable GZip.
         config['STATICFILES_STORAGE'] = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
