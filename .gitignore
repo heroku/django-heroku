@@ -101,3 +101,6 @@ ENV/
 .mypy_cache/
 
 /test/staticfiles/
+
+# VS Code settings
+.vscode/*
