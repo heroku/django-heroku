@@ -46,7 +46,7 @@ class HerokuDiscoverRunner(DiscoverRunner):
         super(HerokuDiscoverRunner, self).teardown_databases(old_config, **kwargs)
 
 
-def settings(config, *, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True):
+def settings(config, *, db_colors=False, databases=True, test_runner=True, staticfiles=True, allowed_hosts=True, logging=True, secret_key=True, geodjango=False):
 
     # Database configuration.
     # TODO: support other database (e.g. TEAL, AMBER, etc, automatically.)
@@ -56,7 +56,7 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
             config['DATABASES'] = {'default': None}
 
         conn_max_age = config.get('CONN_MAX_AGE', MAX_CONN_AGE)
-            
+
         if db_colors:
             # Support all Heroku databases.
             # TODO: This appears to break TestRunner.
@@ -71,8 +71,20 @@ def settings(config, *, db_colors=False, databases=True, test_runner=True, stati
         if 'DATABASE_URL' in os.environ:
             logger.info('Adding $DATABASE_URL to default DATABASE Django setting.')
 
+            db_config = dj_database_url.config(conn_max_age=conn_max_age, ssl_require=True)
+
+            if geodjango:
+                if "postgres" in db_config['ENGINE']:
+                    db_config['ENGINE'] = dj_database_url.SCHEMES['postgis']
+                elif "sqlite" in db_config['ENGINE']:
+                    db_config['ENGINE'] = dj_database_url.SCHEMES['spatialite']
+                elif "oracle" in db_config['ENGINE']:
+                    db_config['ENGINE'] = dj_database_url.SCHEMES['oraclegis']
+                else:
+                    logger.info('Geodjango is enabled but your $DATABASE_URL don\'t have a valid GIS engine available.')
+
             # Configure Django for DATABASE_URL environment variable.
-            config['DATABASES']['default'] = dj_database_url.config(conn_max_age=conn_max_age, ssl_require=True)
+            config['DATABASES']['default'] = db_config
 
             logger.info('Adding $DATABASE_URL to TEST default DATABASE Django setting.')
 
