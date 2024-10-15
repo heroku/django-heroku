@@ -3,19 +3,6 @@
         "hash": {
             "sha256": "05ec4c4c2f6fa8679da8be4d59bd6b70e9c60c56c14281bb14de883a6edbb8b3"
         },
-        "host-environment-markers": {
-            "implementation_name": "cpython",
-            "implementation_version": "3.6.3",
-            "os_name": "posix",
-            "platform_machine": "x86_64",
-            "platform_python_implementation": "CPython",
-            "platform_release": "17.3.0",
-            "platform_system": "Darwin",
-            "platform_version": "Darwin Kernel Version 17.3.0: Thu Nov  9 18:09:22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64",
-            "python_full_version": "3.6.3",
-            "python_version": "3.6",
-            "sys_platform": "darwin"
-        },
         "pipfile-spec": 6,
         "requires": {},
         "sources": [
@@ -27,6 +14,14 @@
         ]
     },
     "default": {
+        "asgiref": {
+            "hashes": [
+                "sha256:3e1e3ecc849832fe52ccf2cb6686b7a55f82bb1d6aee72a58826471390335e47",
+                "sha256:c343bd80a0bec947a9860adb4c432ffa7db769836c64238fc34bdc3fec84d590"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==3.8.1"
+        },
         "dj-database-url": {
             "hashes": [
                 "sha256:e16d94c382ea0564c48038fa7fe8d9c890ef1ab1a8ec4cb48e732c124b9482fd",
@@ -36,10 +31,12 @@
         },
         "django": {
             "hashes": [
-                "sha256:af18618ce3291be5092893d8522fe3919661bf3a1fb60e3858ae74865a4f07c2",
-                "sha256:9614851d4a7ff8cbd32b73c6076441f377c45a5bbff7e771798fb02c43c31f47"
+                "sha256:1ddc333a16fc139fd253035a1606bb24261951bbc3a6ca256717fa06cc41a898",
+                "sha256:6f1616c2786c408ce86ab7e10f792b8f15742f7b7b7460243929cb371e7f1dad"
             ],
-            "version": "==2.0"
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==4.2.16"
         },
         "gunicorn": {
             "hashes": [
@@ -97,6 +94,14 @@
                 "sha256:fae4cffc040921b8a2d60c6cf0b5d662c1190fe54d718271db4eb17d44a185b7"
             ],
             "version": "==2017.3"
+        },
+        "sqlparse": {
+            "hashes": [
+                "sha256:773dcbf9a5ab44a090f3441e2180efe2560220203dc2f8c0b0fa141e18b505e4",
+                "sha256:bb6b4df465655ef332548e24f08e205afc81b9ab86cb1c45657a7ff173a3a00e"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==0.5.1"
         },
         "whitenoise": {
             "hashes": [
